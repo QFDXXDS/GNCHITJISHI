@@ -26,9 +26,13 @@ import android.Manifest.permission.READ_CONTACTS
 import android.content.Intent
 import android.widget.EditText
 import com.xxds.GNHelper.GNService.GNWSService
+import com.xxds.GNHelper.GNWS.GNWSManager.GNWSManager
 import com.xxds.GNTabNav.GNTabNavActivity
 
 import kotlinx.android.synthetic.main.activity_login.*
+
+
+val GNWSURL = "chitdev.byshang.cn"
 
 /**
  * A login screen that offers login via email/password.
@@ -56,7 +60,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         email_sign_in_button.setOnClickListener { attemptLogin() }
 
 
-        startService(Intent(this,GNWSService::class.java) )
 
 
     }
@@ -155,7 +158,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             startService(Intent(this,GNWSService::class.java) )
 
 
-
+            GNWSManager.sendLink(GNWSURL)
 
 
 
@@ -289,7 +292,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             if (success!!) {
 //                finish()
 
-                val intent = Intent().setClass(this@LoginActivity,GNTabNavActivity::class.java)
+                val intent = Intent(this@LoginActivity,GNTabNavActivity::class.java)
                 startActivityForResult(intent,1)
                 overridePendingTransition(R.anim.right_in,R.anim.left_out)
 

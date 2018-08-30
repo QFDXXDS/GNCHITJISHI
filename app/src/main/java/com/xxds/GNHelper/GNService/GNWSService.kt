@@ -8,7 +8,7 @@ import com.xxds.GNHelper.GNWS.GNWSObject
 class GNWSService : Service() {
 
 
-    val socketObject = GNWSObject()
+//    val socketObject = GNWSObject()
 
     override fun onBind(intent: Intent): IBinder? {
         // TODO: Return the communication channel to the service.
@@ -23,7 +23,6 @@ class GNWSService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        socketObject.link("chitdev.byshang.cn")
         return super.onStartCommand(intent, flags, startId)
     }
 

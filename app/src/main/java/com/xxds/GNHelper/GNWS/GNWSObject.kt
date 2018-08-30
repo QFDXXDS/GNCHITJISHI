@@ -22,11 +22,23 @@ import java.net.URI
  val PORTAL_SUFFIX_SUFFIX = "/ue"
 
 
+typealias socketEventBlock = (SocketEvent,Boolean) -> Unit
+
+
+
+enum class SocketEvent{
+
+    GNWS_HeartCheck_Event,
+    GNWS_Reconnect_Event,
+}
+
 class GNWSObject {
 
     var URLString: String? = null
 
-     var socket: WebSocketClient? = null
+    var socket: WebSocketClient? = null
+
+    lateinit var socketEvent:socketEventBlock
 
     fun link(url: String){
 
@@ -38,6 +50,8 @@ class GNWSObject {
             override fun onOpen(handshakedata: ServerHandshake?) {
 
                 println("onClose is ${handshakedata!!.httpStatus}" )
+                this@GNWSObject.socketEvent(SocketEvent.GNWS_HeartCheck_Event,true)
+                this@GNWSObject.socketEvent(SocketEvent.GNWS_Reconnect_Event,false)
 
 
             }
@@ -68,12 +82,16 @@ class GNWSObject {
         socket!!.send(message)
     }
 
-    fun stop(){
+    fun close(){
 
         socket!!.close()
     }
+    fun status(): Boolean {
 
 
+        val state = if (socket!!.readyState == WebSocket.READYSTATE.OPEN) true else false
 
+        return state
 
+    }
 }
