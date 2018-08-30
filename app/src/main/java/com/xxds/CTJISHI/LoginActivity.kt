@@ -56,6 +56,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         email_sign_in_button.setOnClickListener { attemptLogin() }
 
 
+        startService(Intent(this,GNWSService::class.java) )
+
+
     }
 
 
