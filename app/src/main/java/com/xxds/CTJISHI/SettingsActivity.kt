@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.hardware.input.InputManager
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
@@ -16,6 +17,8 @@ import android.preference.PreferenceManager
 import android.preference.RingtonePreference
 import android.text.TextUtils
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 
 /**
  * A [PreferenceActivity] that presents a set of application settings. On
@@ -29,9 +32,21 @@ import android.view.MenuItem
  */
 class SettingsActivity : AppCompatPreferenceActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setupActionBar()
+
+
+       val s =  getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+
+        return super.onTouchEvent(event)
+
     }
 
     /**

@@ -24,7 +24,10 @@ import android.widget.TextView
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Intent
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.widget.EditText
+import android.widget.Toast
 import com.xxds.GNHelper.GNService.GNWSService
 import com.xxds.GNHelper.GNWS.GNWSManager.GNWSManager
 import com.xxds.GNTabNav.GNTabNavActivity
@@ -37,10 +40,12 @@ val GNWSURL = "chitdev.byshang.cn"
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
+class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> ,GestureDetector.OnGestureListener{
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+
+   lateinit  var  detector: GestureDetector
     private var mAuthTask: UserLoginTask? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +64,58 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
         email_sign_in_button.setOnClickListener { attemptLogin() }
 
+        detector = GestureDetector(this,this)
+    }
+
+//    override fun onTouchEvent(event: MotionEvent?): Boolean {
+//
+////        return  detector.onTouchEvent(event)
+//
+//        return true
+//    }
 
 
+    override fun onDown(e: MotionEvent?): Boolean {
+
+          Toast.makeText(this, "OnDown", Toast.LENGTH_LONG).show();
+        return false
+    }
+
+    override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
+
+        return true
+    }
+
+    override fun onLongPress(e: MotionEvent?) {
 
     }
 
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+        return true
+    }
+
+    override fun onShowPress(e: MotionEvent?) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    return true
+    }
+
+//    override fun onDoubleTap(e: MotionEvent?): Boolean {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//    }
+//
+//    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//    }
+//
+//    override fun onDoubleTapEvent(e: MotionEvent?): Boolean {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//    }
 
     private fun populateAutoComplete() {
         if (!mayRequestContacts()) {
